@@ -1,18 +1,14 @@
 part of 'widgets.dart';
 
 class MenuCard extends StatelessWidget {
-  final FoodData foodData;
-  final Color color;
+  final String? menuName;
 
-  const MenuCard({Key? key, required this.foodData, required this.color})
-      : super(key: key);
+  const MenuCard({Key? key, this.menuName}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return VxBox(
-      child: foodData.name!.text.color(color).make().objectCenter(),
-    )
-        .size(context.percentWidth * 40, context.percentHeight * 10)
-        .color(color.withOpacity(.1))
+    return VxBox(child: menuName!.text.blue400.makeCentered())
+        .size(Get.width * .4, Get.height * .1)
+        .color(Colors.white)
         .roundedSM
         .make();
   }

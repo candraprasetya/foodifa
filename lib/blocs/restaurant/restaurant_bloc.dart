@@ -18,9 +18,15 @@ class RestaurantBloc extends Bloc<RestaurantEvent, RestaurantState> {
   ) async* {
     yield* event.map(
         started: (value) async* {},
+        searchRestaurantByKeyword: (value) async* {
+          yield RestaurantState.isLoading();
+          final res =
+              await RestaurantServices.searchRestaurantByKeyword(value.keyword);
+          yield res.fold((l) => RestaurantState.isError(l),
+              (r) => RestaurantState.isSuccess(r));
+        },
         fetchAll: (value) async* {
           yield RestaurantState.isLoading();
-
           final res = await RestaurantServices.fetchRestaurant();
           yield res.fold((l) => RestaurantState.isError(l),
               (r) => RestaurantState.isSuccess(r));

@@ -2,6 +2,7 @@ part of '../screens.dart';
 
 class DetailScreen extends StatelessWidget {
   final c = Get.put(DetailController());
+  final String id = Get.arguments;
 
   @override
   Widget build(BuildContext context) {
@@ -11,82 +12,120 @@ class DetailScreen extends StatelessWidget {
         elevation: 0.0,
       ),
       body: SafeArea(
-        child: VStack([
-          _headerImage(context),
-          _textRestaurantName(),
-          _textRestaurantLocation(),
-          _textRestaurantDescription(),
-          _textRestaurantFoods(),
-          _textRestaurantDrinks(),
-          60.heightBox,
-        ]).scrollVertical(physics: BouncingScrollPhysics()),
+        child: BlocBuilder<NetworkBloc, NetworkState>(
+          builder: (context, state) {
+            return state.maybeMap(
+                orElse: () => Container(),
+                connectionFailure: (value) => NoConnectionScreen(),
+                connectionSuccess: (value) => BlocProvider(
+                      create: (context) => DetailRestaurantBloc()
+                        ..add(DetailRestaurantEvent.getDetailRestaurant(id)),
+                      child: BlocConsumer<DetailRestaurantBloc,
+                          DetailRestaurantState>(
+                        listener: (context, state) {
+                          state.maybeMap(
+                            orElse: () {},
+                            isSuccess: (value) {
+                              c.restaurant = value.model;
+                            },
+                          );
+                        },
+                        builder: (context, state) {
+                          return state.maybeMap(
+                            orElse: () => Container(),
+                            isLoading: (value) => LoadingWidget(),
+                            isSuccess: (value) => VStack([
+                              _headerImage(context),
+                              _textRestaurantName(),
+                              _textRestaurantLocation(),
+                              _textRestaurantDescription(),
+                              _foodsRestaurant(),
+                              _drinksRestaurant(),
+                              _reviewRestaurant(),
+                              60.heightBox,
+                            ]),
+                          );
+                        },
+                      ),
+                    ));
+          },
+        ).scrollVertical(physics: BouncingScrollPhysics()),
       ),
     );
+  }
+
+  Widget _foodsRestaurant() {
+    return VStack([
+      'Foods'
+          .text
+          .bold
+          .size(16)
+          .make()
+          .pOnly(left: 24, right: 24, bottom: 8, top: 20),
+      SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
+          scrollDirection: Axis.horizontal,
+          child: HStack(c.restaurant.restaurant!.menus!.foods!.map((e) {
+            int index = c.restaurant.restaurant!.menus!.foods!.indexOf(e);
+            return MenuCard(
+              menuName: e.name,
+            ).pOnly(
+                left: index == 0 ? 24 : 4,
+                bottom: 16,
+                right:
+                    index == c.restaurant.restaurant!.menus!.foods!.length - 1
+                        ? 24
+                        : 4);
+          }).toList()))
+    ]);
+  }
+
+  Widget _drinksRestaurant() {
+    return VStack([
+      'Drinks'
+          .text
+          .bold
+          .size(16)
+          .make()
+          .pOnly(left: 24, right: 24, bottom: 8, top: 20),
+      SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
+          scrollDirection: Axis.horizontal,
+          child: HStack(c.restaurant.restaurant!.menus!.drinks!.map((e) {
+            int index = c.restaurant.restaurant!.menus!.drinks!.indexOf(e);
+            return MenuCard(
+              menuName: e.name,
+            ).pOnly(
+                left: index == 0 ? 24 : 4,
+                bottom: 16,
+                right:
+                    index == c.restaurant.restaurant!.menus!.drinks!.length - 1
+                        ? 24
+                        : 4);
+          }).toList()))
+    ]);
   }
 
   Widget _textRestaurantDescription() {
     return VStack([
       'Description'.text.bold.size(16).make().pOnly(bottom: 8, top: 20),
-      c.restaurant.description!.text.coolGray400.justify.make(),
+      c.restaurant.restaurant!.description!.text.coolGray400.justify.make(),
     ]).pSymmetric(h: 24);
   }
 
-  Widget _textRestaurantDrinks() {
-    return VStack(
-      [
-        'Drinks'
-            .text
-            .bold
-            .size(16)
-            .make()
-            .pOnly(bottom: 8, top: 20, left: 24, right: 24),
-        SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            physics: BouncingScrollPhysics(),
-            child: HStack(c.restaurant.menus!.drinks!.map((e) {
-              int index = c.restaurant.menus!.drinks!.indexOf(e);
-              return MenuCard(
-                foodData: e,
-                color: Colors.blue,
-              ).pOnly(
-                  left: (index == 0) ? 24 : 6,
-                  right: (index == c.restaurant.menus!.drinks!.length - 1)
-                      ? 24
-                      : 6);
-            }).toList()))
-      ],
-    );
-  }
-
-  Widget _textRestaurantFoods() {
-    return VStack(
-      [
-        'Foods'
-            .text
-            .bold
-            .size(16)
-            .make()
-            .pOnly(bottom: 8, top: 20, left: 24, right: 24),
-        SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            physics: BouncingScrollPhysics(),
-            child: HStack(c.restaurant.menus!.foods!.map((e) {
-              int index = c.restaurant.menus!.foods!.indexOf(e);
-              return MenuCard(
-                foodData: e,
-                color: Colors.teal[700]!,
-              ).pOnly(
-                  left: (index == 0) ? 24 : 6,
-                  right: (index == c.restaurant.menus!.foods!.length - 1)
-                      ? 24
-                      : 6);
-            }).toList()))
-      ],
-    );
+  Widget _reviewRestaurant() {
+    return VStack([
+      'Review'.text.bold.size(16).make().pOnly(bottom: 8, top: 20),
+      SingleChildScrollView(
+        child: VStack(c.restaurant.restaurant!.customerReviews!
+            .map((e) => ReviewCard(e))
+            .toList()),
+      )
+    ]).pSymmetric(h: 24);
   }
 
   Widget _textRestaurantName() {
-    return c.restaurant.name!.text.bold.size(24).make().px24();
+    return c.restaurant.restaurant!.name!.text.bold.size(24).make().px24();
   }
 
   Widget _textRestaurantRating() {
@@ -96,7 +135,7 @@ class DetailScreen extends StatelessWidget {
           Icons.star,
           color: Colors.amber[300],
         ).pOnly(right: 6),
-        c.restaurant.rating!.text.white.make()
+        c.restaurant.restaurant!.rating!.text.white.make()
       ],
       alignment: MainAxisAlignment.center,
     ).objectTopRight().p24();
@@ -105,7 +144,7 @@ class DetailScreen extends StatelessWidget {
   Widget _textRestaurantLocation() {
     return HStack([
       Icon(Icons.location_pin, color: Colors.red[300]),
-      c.restaurant.city!.text.make().expand(),
+      c.restaurant.restaurant!.city!.text.make().expand(),
     ]).pSymmetric(h: 24, v: 8);
   }
 
@@ -116,7 +155,9 @@ class DetailScreen extends StatelessWidget {
           begin: Alignment.topCenter, end: Alignment.bottomCenter).make(),
     )
         .bgImage(DecorationImage(
-            image: NetworkImage(c.restaurant.pictureId!), fit: BoxFit.cover))
+            image:
+                NetworkImage(pictureUrl + c.restaurant.restaurant!.pictureId!),
+            fit: BoxFit.cover))
         .size(context.screenWidth, context.percentHeight * 26)
         .withRounded(value: 20)
         .make()

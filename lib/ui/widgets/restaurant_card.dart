@@ -26,7 +26,8 @@ class RestaurantCard extends StatelessWidget {
                 begin: Alignment.bottomCenter, end: Alignment.topCenter).make(),
       )
           .bgImage(DecorationImage(
-              image: NetworkImage(restaurant.pictureId!), fit: BoxFit.cover))
+              image: NetworkImage(pictureUrl + restaurant.pictureId!),
+              fit: BoxFit.cover))
           .size(context.screenWidth, 140)
           .withRounded(value: 20)
           .make()

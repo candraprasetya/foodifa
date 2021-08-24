@@ -23,6 +23,12 @@ class _$RestaurantEventTearOff {
   _FetchAll fetchAll() {
     return const _FetchAll();
   }
+
+  _SearchRestaurantByKeyword searchRestaurantByKeyword(String keyword) {
+    return _SearchRestaurantByKeyword(
+      keyword,
+    );
+  }
 }
 
 /// @nodoc
@@ -34,12 +40,14 @@ mixin _$RestaurantEvent {
   TResult when<TResult extends Object?>({
     required TResult Function() started,
     required TResult Function() fetchAll,
+    required TResult Function(String keyword) searchRestaurantByKeyword,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
     TResult Function()? fetchAll,
+    TResult Function(String keyword)? searchRestaurantByKeyword,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -47,12 +55,16 @@ mixin _$RestaurantEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
     required TResult Function(_FetchAll value) fetchAll,
+    required TResult Function(_SearchRestaurantByKeyword value)
+        searchRestaurantByKeyword,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
     TResult Function(_FetchAll value)? fetchAll,
+    TResult Function(_SearchRestaurantByKeyword value)?
+        searchRestaurantByKeyword,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -114,6 +126,7 @@ class _$_Started implements _Started {
   TResult when<TResult extends Object?>({
     required TResult Function() started,
     required TResult Function() fetchAll,
+    required TResult Function(String keyword) searchRestaurantByKeyword,
   }) {
     return started();
   }
@@ -123,6 +136,7 @@ class _$_Started implements _Started {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
     TResult Function()? fetchAll,
+    TResult Function(String keyword)? searchRestaurantByKeyword,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -136,6 +150,8 @@ class _$_Started implements _Started {
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
     required TResult Function(_FetchAll value) fetchAll,
+    required TResult Function(_SearchRestaurantByKeyword value)
+        searchRestaurantByKeyword,
   }) {
     return started(this);
   }
@@ -145,6 +161,8 @@ class _$_Started implements _Started {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
     TResult Function(_FetchAll value)? fetchAll,
+    TResult Function(_SearchRestaurantByKeyword value)?
+        searchRestaurantByKeyword,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -197,6 +215,7 @@ class _$_FetchAll implements _FetchAll {
   TResult when<TResult extends Object?>({
     required TResult Function() started,
     required TResult Function() fetchAll,
+    required TResult Function(String keyword) searchRestaurantByKeyword,
   }) {
     return fetchAll();
   }
@@ -206,6 +225,7 @@ class _$_FetchAll implements _FetchAll {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
     TResult Function()? fetchAll,
+    TResult Function(String keyword)? searchRestaurantByKeyword,
     required TResult orElse(),
   }) {
     if (fetchAll != null) {
@@ -219,6 +239,8 @@ class _$_FetchAll implements _FetchAll {
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
     required TResult Function(_FetchAll value) fetchAll,
+    required TResult Function(_SearchRestaurantByKeyword value)
+        searchRestaurantByKeyword,
   }) {
     return fetchAll(this);
   }
@@ -228,6 +250,8 @@ class _$_FetchAll implements _FetchAll {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
     TResult Function(_FetchAll value)? fetchAll,
+    TResult Function(_SearchRestaurantByKeyword value)?
+        searchRestaurantByKeyword,
     required TResult orElse(),
   }) {
     if (fetchAll != null) {
@@ -239,6 +263,132 @@ class _$_FetchAll implements _FetchAll {
 
 abstract class _FetchAll implements RestaurantEvent {
   const factory _FetchAll() = _$_FetchAll;
+}
+
+/// @nodoc
+abstract class _$SearchRestaurantByKeywordCopyWith<$Res> {
+  factory _$SearchRestaurantByKeywordCopyWith(_SearchRestaurantByKeyword value,
+          $Res Function(_SearchRestaurantByKeyword) then) =
+      __$SearchRestaurantByKeywordCopyWithImpl<$Res>;
+  $Res call({String keyword});
+}
+
+/// @nodoc
+class __$SearchRestaurantByKeywordCopyWithImpl<$Res>
+    extends _$RestaurantEventCopyWithImpl<$Res>
+    implements _$SearchRestaurantByKeywordCopyWith<$Res> {
+  __$SearchRestaurantByKeywordCopyWithImpl(_SearchRestaurantByKeyword _value,
+      $Res Function(_SearchRestaurantByKeyword) _then)
+      : super(_value, (v) => _then(v as _SearchRestaurantByKeyword));
+
+  @override
+  _SearchRestaurantByKeyword get _value =>
+      super._value as _SearchRestaurantByKeyword;
+
+  @override
+  $Res call({
+    Object? keyword = freezed,
+  }) {
+    return _then(_SearchRestaurantByKeyword(
+      keyword == freezed
+          ? _value.keyword
+          : keyword // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_SearchRestaurantByKeyword implements _SearchRestaurantByKeyword {
+  const _$_SearchRestaurantByKeyword(this.keyword);
+
+  @override
+  final String keyword;
+
+  @override
+  String toString() {
+    return 'RestaurantEvent.searchRestaurantByKeyword(keyword: $keyword)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _SearchRestaurantByKeyword &&
+            (identical(other.keyword, keyword) ||
+                const DeepCollectionEquality().equals(other.keyword, keyword)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(keyword);
+
+  @JsonKey(ignore: true)
+  @override
+  _$SearchRestaurantByKeywordCopyWith<_SearchRestaurantByKeyword>
+      get copyWith =>
+          __$SearchRestaurantByKeywordCopyWithImpl<_SearchRestaurantByKeyword>(
+              this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function() fetchAll,
+    required TResult Function(String keyword) searchRestaurantByKeyword,
+  }) {
+    return searchRestaurantByKeyword(keyword);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function()? fetchAll,
+    TResult Function(String keyword)? searchRestaurantByKeyword,
+    required TResult orElse(),
+  }) {
+    if (searchRestaurantByKeyword != null) {
+      return searchRestaurantByKeyword(keyword);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(_FetchAll value) fetchAll,
+    required TResult Function(_SearchRestaurantByKeyword value)
+        searchRestaurantByKeyword,
+  }) {
+    return searchRestaurantByKeyword(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(_FetchAll value)? fetchAll,
+    TResult Function(_SearchRestaurantByKeyword value)?
+        searchRestaurantByKeyword,
+    required TResult orElse(),
+  }) {
+    if (searchRestaurantByKeyword != null) {
+      return searchRestaurantByKeyword(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _SearchRestaurantByKeyword implements RestaurantEvent {
+  const factory _SearchRestaurantByKeyword(String keyword) =
+      _$_SearchRestaurantByKeyword;
+
+  String get keyword => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$SearchRestaurantByKeywordCopyWith<_SearchRestaurantByKeyword>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc

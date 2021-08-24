@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodifa/blocs/blocs.dart';
@@ -12,18 +14,32 @@ class HomeController extends GetxController {
   final detailController = Get.put(DetailController());
 
   void getDetail(Restaurant restaurantFromHome) {
-    detailController.restaurant = restaurantFromHome;
-    Get.toNamed(MyRoutes.detailScreen);
+    Get.toNamed(MyRoutes.detailScreen, arguments: restaurantFromHome.id);
   }
 
-  Future<void> refreshData(BuildContext context) async {
-    return BlocProvider.of<RestaurantBloc>(context)
+  void searchByKeyword() {
+    BlocProvider.of<RestaurantBloc>(Get.context!)
+        .add(RestaurantEvent.searchRestaurantByKeyword(searchController.text));
+  }
+
+  Future<void> refreshData() async {
+    return BlocProvider.of<RestaurantBloc>(Get.context!)
         .add(RestaurantEvent.fetchAll());
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
   }
 
   @override
   void onInit() {
     searchController = TextEditingController();
+    BlocProvider.of<RestaurantBloc>(Get.context!)
+        .add(RestaurantEvent.fetchAll());
+    BlocProvider.of<NetworkBloc>(Get.context!)
+        .add(NetworkEvent.listenConnection());
+
     super.onInit();
   }
 }

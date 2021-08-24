@@ -4,4 +4,6 @@ part of 'restaurant_bloc.dart';
 class RestaurantEvent with _$RestaurantEvent {
   const factory RestaurantEvent.started() = _Started;
   const factory RestaurantEvent.fetchAll() = _FetchAll;
+  const factory RestaurantEvent.searchRestaurantByKeyword(String keyword) =
+      _SearchRestaurantByKeyword;
 }

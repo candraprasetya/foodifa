@@ -10,9 +10,7 @@ Future<Dio> getApiClient(String path) async {
       return handler.next(options);
     },
     onError: (e, handler) async {
-      if (e.response!.statusCode == 500) {
-        return handler.next(e);
-      }
+      return handler.next(e);
     },
     onResponse: (e, handler) {
       log('ON RESPONSE', name: 'DIODA');
