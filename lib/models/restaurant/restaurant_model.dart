@@ -43,7 +43,7 @@ class RestaurantModel {
       };
 }
 
-class Restaurant {
+class Restaurant extends HiveObject {
   Restaurant({
     this.id,
     this.name,

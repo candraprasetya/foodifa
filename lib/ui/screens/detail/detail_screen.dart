@@ -8,7 +8,7 @@ class DetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.transparent,
         elevation: 0.0,
       ),
       body: SafeArea(
@@ -35,8 +35,8 @@ class DetailScreen extends StatelessWidget {
                             orElse: () => Container(),
                             isLoading: (value) => LoadingWidget(),
                             isSuccess: (value) => VStack([
-                              _headerImage(context),
                               _textRestaurantName(),
+                              _headerImage(context),
                               _textRestaurantLocation(),
                               _textRestaurantDescription(),
                               _foodsRestaurant(),
@@ -108,7 +108,7 @@ class DetailScreen extends StatelessWidget {
 
   Widget _textRestaurantDescription() {
     return VStack([
-      'Description'.text.bold.size(16).make().pOnly(bottom: 8, top: 20),
+      'Description'.text.bold.size(16).make().pOnly(bottom: 8),
       c.restaurant.restaurant!.description!.text.coolGray400.justify.make(),
     ]).pSymmetric(h: 24);
   }
@@ -125,7 +125,10 @@ class DetailScreen extends StatelessWidget {
   }
 
   Widget _textRestaurantName() {
-    return c.restaurant.restaurant!.name!.text.bold.size(24).make().px24();
+    return c.restaurant.restaurant!.name!.text.base.blueGray600.light
+        .size(24)
+        .make()
+        .p24();
   }
 
   Widget _textRestaurantRating() {
@@ -145,7 +148,7 @@ class DetailScreen extends StatelessWidget {
     return HStack([
       Icon(Icons.location_pin, color: Colors.red[300]),
       c.restaurant.restaurant!.city!.text.make().expand(),
-    ]).pSymmetric(h: 24, v: 8);
+    ]).p24();
   }
 
   Widget _headerImage(BuildContext context) {
@@ -161,6 +164,6 @@ class DetailScreen extends StatelessWidget {
         .size(context.screenWidth, context.percentHeight * 26)
         .withRounded(value: 20)
         .make()
-        .p24();
+        .px24();
   }
 }

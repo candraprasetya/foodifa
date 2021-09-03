@@ -12,9 +12,14 @@ class HomeController extends GetxController {
   late List<Restaurant> model = [];
   late TextEditingController searchController;
   final detailController = Get.put(DetailController());
+  final NotificationHelper notificationHelper = NotificationHelper();
 
   void getDetail(Restaurant restaurantFromHome) {
     Get.toNamed(MyRoutes.detailScreen, arguments: restaurantFromHome.id);
+  }
+
+  void openSettingScreen() {
+    Get.toNamed(MyRoutes.settingScreen);
   }
 
   void searchByKeyword() {
@@ -29,17 +34,18 @@ class HomeController extends GetxController {
 
   @override
   void onClose() {
+    selectNotificationSubject.close();
     super.onClose();
   }
 
   @override
-  void onInit() {
+  void onInit() async {
     searchController = TextEditingController();
     BlocProvider.of<RestaurantBloc>(Get.context!)
         .add(RestaurantEvent.fetchAll());
     BlocProvider.of<NetworkBloc>(Get.context!)
         .add(NetworkEvent.listenConnection());
-
+    notificationHelper.configureSelectNotificationSubject();
     super.onInit();
   }
 }

@@ -18,12 +18,16 @@ class HomeScreen extends StatelessWidget {
               orElse: () => Container(),
               connectionFailure: (value) => NoConnectionScreen(),
               connectionSuccess: (value) => VStack([
-                "foodifa".text.base.bold.size(26).make().p24(),
-                "recommendation restaurants for you"
-                    .text
-                    .base
-                    .make()
-                    .pOnly(left: 24, right: 24, bottom: 24),
+                HStack([
+                  VStack([
+                    "foodifa".text.base.bold.size(26).make(),
+                    6.heightBox,
+                    "recommendation restaurants for you".text.base.make()
+                  ]).expand(),
+                  IconButton(
+                      onPressed: homeController.openSettingScreen,
+                      icon: Icon(Icons.settings))
+                ]).p24(),
                 HStack(
                   [
                     Icon(Icons.search),
