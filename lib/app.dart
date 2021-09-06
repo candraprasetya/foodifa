@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => RestaurantBloc()),
         BlocProvider(create: (context) => NetworkBloc()),
         BlocProvider(create: (context) => AlarmBloc()),
+        BlocProvider(create: (context) => FavoritesBloc()),
       ],
       child: GetMaterialApp(
         getPages: pages,

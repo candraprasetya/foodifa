@@ -5,6 +5,7 @@ class MyRoutes {
   static const homeScreen = '/home';
   static const detailScreen = '/detail';
   static const settingScreen = '/setting';
+  static const favoritesScreen = '/favorites';
 }
 
 List<GetPage> pages = [
@@ -12,4 +13,5 @@ List<GetPage> pages = [
   GetPage(name: MyRoutes.homeScreen, page: () => HomeScreen()),
   GetPage(name: MyRoutes.detailScreen, page: () => DetailScreen()),
   GetPage(name: MyRoutes.settingScreen, page: () => SettingScreen()),
+  GetPage(name: MyRoutes.favoritesScreen, page: () => FavoritesScreen()),
 ];

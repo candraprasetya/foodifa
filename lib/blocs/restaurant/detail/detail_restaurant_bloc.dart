@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:foodifa/models/models.dart';
+import 'package:foodifa/models/restaurant/detail/detail_restaurant_model.dart';
 import 'package:foodifa/services/services.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 

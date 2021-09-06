@@ -15,7 +15,10 @@ import 'package:hive/hive.dart';
 import 'package:lottie/lottie.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'favorites/favorites_controller.dart';
+import 'package:foodifa/models/restaurant/detail/detail_restaurant_model.dart';
 
+part 'favorites/favorites_screen.dart';
 part 'splash/splash_screen.dart';
 part 'home/home_screen.dart';
 part 'detail/detail_screen.dart';

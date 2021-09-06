@@ -153,7 +153,34 @@ class DetailScreen extends StatelessWidget {
 
   Widget _headerImage(BuildContext context) {
     return VxBox(
-      child: _textRestaurantRating().box.withRounded(value: 20).linearGradient(
+      child: VStack([
+        FutureBuilder(
+          future: Hive.openBox<RestaurantData>('restaurants'),
+          builder: (context, snapshot) =>
+              (snapshot.connectionState == ConnectionState.waiting)
+                  ? CircularProgressIndicator()
+                  : ValueListenableBuilder(
+                      valueListenable:
+                          Hive.box<RestaurantData>('restaurants').listenable(),
+                      builder: (context, Box<RestaurantData> value, child) {
+                        return IconButton(
+                            onPressed: () => (value.get(id) != null)
+                                ? BlocProvider.of<FavoritesBloc>(context)
+                                    .add(FavoritesEvent.deleteFromFav(id))
+                                : BlocProvider.of<FavoritesBloc>(context).add(
+                                    FavoritesEvent.addToFav(
+                                        c.restaurant.restaurant!)),
+                            color: (value.get(id) != null)
+                                ? Colors.redAccent
+                                : Colors.white,
+                            icon: Icon((value.get(id) != null)
+                                ? Icons.favorite
+                                : Icons.favorite_border_outlined));
+                      },
+                    ),
+        ).objectTopRight(),
+        _textRestaurantRating(),
+      ]).box.withRounded(value: 20).linearGradient(
           [Colors.black87, Colors.transparent],
           begin: Alignment.topCenter, end: Alignment.bottomCenter).make(),
     )

@@ -1,5 +1,7 @@
-part of '../../models.dart';
+import 'dart:convert';
+import 'package:hive_flutter/hive_flutter.dart';
 
+part 'detail_restaurant_model.g.dart';
 // To parse this JSON data, do
 //
 //     final detailRestaurantModel = detailRestaurantModelFromJson(jsonString);
@@ -35,6 +37,7 @@ class DetailRestaurantModel {
       };
 }
 
+@HiveType(typeId: 0)
 class RestaurantData {
   RestaurantData({
     this.id,
@@ -49,15 +52,25 @@ class RestaurantData {
     this.customerReviews,
   });
 
+  @HiveField(0)
   final String? id;
+  @HiveField(1)
   final String? name;
+  @HiveField(2)
   final String? description;
+  @HiveField(3)
   final String? city;
+  @HiveField(4)
   final String? address;
+  @HiveField(5)
   final String? pictureId;
+  @HiveField(6)
   final List<Category>? categories;
+  @HiveField(7)
   final Menus? menus;
+  @HiveField(8)
   final double? rating;
+  @HiveField(9)
   final List<CustomerReview>? customerReviews;
 
   factory RestaurantData.fromJson(Map<String, dynamic> json) => RestaurantData(
@@ -90,11 +103,13 @@ class RestaurantData {
       };
 }
 
+@HiveType(typeId: 1)
 class Category {
   Category({
     this.name,
   });
 
+  @HiveField(0)
   final String? name;
 
   factory Category.fromJson(Map<String, dynamic> json) => Category(
@@ -106,15 +121,18 @@ class Category {
       };
 }
 
+@HiveType(typeId: 2)
 class CustomerReview {
   CustomerReview({
     this.name,
     this.review,
     this.date,
   });
-
+  @HiveField(0)
   final String? name;
+  @HiveField(1)
   final String? review;
+  @HiveField(2)
   final String? date;
 
   factory CustomerReview.fromJson(Map<String, dynamic> json) => CustomerReview(
@@ -130,13 +148,15 @@ class CustomerReview {
       };
 }
 
+@HiveType(typeId: 3)
 class Menus {
   Menus({
     this.foods,
     this.drinks,
   });
-
+  @HiveField(0)
   final List<Category>? foods;
+  @HiveField(1)
   final List<Category>? drinks;
 
   factory Menus.fromJson(Map<String, dynamic> json) => Menus(

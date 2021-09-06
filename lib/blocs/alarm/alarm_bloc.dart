@@ -33,10 +33,10 @@ class AlarmBloc extends Bloc<AlarmEvent, AlarmState> {
         setAlarm: (value) async* {
           log('SET ALARM');
           await AndroidAlarmManager.periodic(
-            Duration(seconds: 5),
+            Duration(hours: 24),
             1,
             BackgroundService.callback,
-            startAt: DateTime.now(),
+            startAt: DateTimeHelper.format(),
             exact: true,
             wakeup: true,
           );

@@ -25,6 +25,12 @@ class HomeScreen extends StatelessWidget {
                     "recommendation restaurants for you".text.base.make()
                   ]).expand(),
                   IconButton(
+                      onPressed: homeController.openFavoritesScreen,
+                      icon: Icon(
+                        Icons.favorite,
+                        color: Colors.redAccent,
+                      )),
+                  IconButton(
                       onPressed: homeController.openSettingScreen,
                       icon: Icon(Icons.settings))
                 ]).p24(),

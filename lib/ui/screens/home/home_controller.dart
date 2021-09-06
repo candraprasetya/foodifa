@@ -22,6 +22,10 @@ class HomeController extends GetxController {
     Get.toNamed(MyRoutes.settingScreen);
   }
 
+  void openFavoritesScreen() {
+    Get.toNamed(MyRoutes.favoritesScreen);
+  }
+
   void searchByKeyword() {
     BlocProvider.of<RestaurantBloc>(Get.context!)
         .add(RestaurantEvent.searchRestaurantByKeyword(searchController.text));

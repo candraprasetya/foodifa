@@ -1,6 +1,8 @@
 import 'dart:developer';
 import 'dart:isolate';
 import 'dart:ui';
+import 'package:foodifa/models/restaurant/detail/detail_restaurant_model.dart';
+
 import '../main.dart';
 
 import 'package:dartz/dartz.dart';
